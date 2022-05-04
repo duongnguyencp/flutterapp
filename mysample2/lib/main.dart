@@ -212,7 +212,7 @@ class ModelSheetAdd extends StatelessWidget {
               ),
               TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Icon(Icons.cancel_outlined))
+                  child: const Icon(Icons.close_outlined,color:Colors.black))
             ],
           ),
           RowItemModelView(
@@ -324,7 +324,13 @@ class SliverAppBarYoutube extends StatelessWidget {
   final bool _pinned = false;
   final bool _snapped = true;
   final bool _floating = true;
-  final List<String> categorys = ["Tất cả", "Âm nhạc"];
+  final List<String> categorys = [
+    "Tất cả",
+    "Danh sách kết hợp",
+    "Trò chơi",
+    "Chương trình nấu ăn",
+    "Bóng đá"
+  ];
 
   SliverAppBarYoutube({Key? key}) : super(key: key);
 
@@ -368,25 +374,25 @@ class SliverAppBarYoutube extends StatelessWidget {
                 )
               ],
             ),
-            Wrap(
-
-              children: [
-                ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categorys.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        padding: const EdgeInsets.all(5),
-                        child:  Text(categorys[index]),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(12)),
-                      );
-                    }),
-              ],
+            Container(
+              height: 30,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categorys.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: const EdgeInsets.only(right:10),
+                      padding: const EdgeInsets.all(5),
+                      child:  Text(categorys[index]),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(12)),
+                    );
+                  }),
             )
           ],
         ),
