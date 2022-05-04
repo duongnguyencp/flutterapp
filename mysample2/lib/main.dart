@@ -4,11 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:mysample2/resource/VideoModel.dart';
 import 'package:mysample2/resource/data.dart';
-import 'constants.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+  ));
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -106,10 +111,15 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView.builder(itemBuilder: (BuildContext context, int index) {
-        return ItemVideoCardView(viewModel: listVideos[0]);
-      }),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBarYoutube(),
+          SliverList(delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            return ItemVideoCardView(viewModel: listVideos[0]);
+          })),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
           elevation: 0,
           color: Colors.transparent,
@@ -205,10 +215,24 @@ class ModelSheetAdd extends StatelessWidget {
                   child: const Icon(Icons.cancel_outlined))
             ],
           ),
-          RowItemModelView(iconData:Icons.tiktok_outlined,textContent:"Create a Short", iconSize:24.0,textSize:18.0, event:()=>{}),
-          RowItemModelView(iconData:Icons.upload_outlined,textContent: "Upload a video", iconSize: 24.0, textSize: 18.0,event:()=> {}),
-          RowItemModelView(iconData:Icons.live_tv_outlined,textContent: "Go live", iconSize: 24.0,textSize: 18.0, event: ()=>{})
-
+          RowItemModelView(
+              iconData: Icons.tiktok_outlined,
+              textContent: "Create a Short",
+              iconSize: 24.0,
+              textSize: 18.0,
+              event: () => {}),
+          RowItemModelView(
+              iconData: Icons.upload_outlined,
+              textContent: "Upload a video",
+              iconSize: 24.0,
+              textSize: 18.0,
+              event: () => {}),
+          RowItemModelView(
+              iconData: Icons.live_tv_outlined,
+              textContent: "Go live",
+              iconSize: 24.0,
+              textSize: 18.0,
+              event: () => {})
         ],
       ),
     );
@@ -221,25 +245,22 @@ class RowItemModelView extends StatelessWidget {
   final double iconSize;
   final double textSize;
   final Function() event;
+
   const RowItemModelView(
       {Key? key,
       required this.iconData,
       required this.textContent,
       required this.iconSize,
       required this.textSize,
-      required this.event
-      })
+      required this.event})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-            iconSize: iconSize,
-            icon:  Icon(iconData),
-            onPressed: event),
-         Text(
+        IconButton(iconSize: iconSize, icon: Icon(iconData), onPressed: event),
+        Text(
           textContent,
           style: TextStyle(fontSize: textSize),
         )
@@ -260,7 +281,6 @@ class ItemVideoCardView extends StatelessWidget {
       children: [
         Stack(
           alignment: AlignmentDirectional.bottomEnd,
-
           children: [
             Image.network(viewModel.srcVideoImage),
             Container(
@@ -296,6 +316,81 @@ class ItemVideoCardView extends StatelessWidget {
           title: Text(viewModel.nameVideo),
         )
       ],
+    );
+  }
+}
+
+class SliverAppBarYoutube extends StatelessWidget {
+  final bool _pinned = false;
+  final bool _snapped = true;
+  final bool _floating = true;
+  final List<String> categorys = ["Tất cả", "Âm nhạc"];
+
+  SliverAppBarYoutube({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      pinned: _pinned,
+      snap: _snapped,
+      collapsedHeight: 100,
+      floating: _floating,
+      backgroundColor: Colors.white,
+      flexibleSpace: Container(
+        padding: const EdgeInsets.only(top: 25, left: 10),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.network(
+                  "https://img.icons8.com/color/144/000000/youtube-play.png",
+                  width: 36,
+                  height: 36,
+                ),
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  alignment: WrapAlignment.start,
+                  spacing: 10,
+                  children: const [
+                    Icon(
+                      Icons.cast_outlined,
+                      size: 24,
+                    ),
+                    Icon(Icons.notifications_none_outlined, size: 24),
+                    Icon(Icons.search_outlined),
+                    CircleAvatar(
+                      maxRadius: 14,
+                      backgroundColor: Colors.green,
+                      child: Text("d", style: TextStyle(fontSize: 16)),
+                    )
+                  ],
+                )
+              ],
+            ),
+            Wrap(
+
+              children: [
+                ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categorys.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        padding: const EdgeInsets.all(5),
+                        child:  Text(categorys[index]),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12)),
+                      );
+                    }),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
