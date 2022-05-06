@@ -15,36 +15,10 @@ const Color shrineErrorRed = Color(0xFFC5032B);
 
 const Color shrineSurfaceWhite = Color(0xFFFFFBFA);
 const Color shrineBackgroundWhite = Colors.white;
-const Color white = Color(0x00ffffff);
+const Color white = Color(0x000000ff);
 const Color black = Color(0x00212121);
 const defaultLetterSpacing = 0.03;
-const ColorScheme _shrineColorScheme = ColorScheme(
-  primary: shrinePink100,
-  primaryVariant: shrineBrown900,
-  secondary: shrinePink50,
-  secondaryVariant: shrineBrown900,
-  surface: shrineSurfaceWhite,
-  background: white,
-  error: shrineErrorRed,
-  onPrimary: shrineBrown900,
-  onSecondary: shrineBrown900,
-  onSurface: shrineBrown900,
-  onBackground: shrineBrown900,
-  onError: shrineSurfaceWhite,
-  brightness: Brightness.light,
-);
-Row row = Row(
-  crossAxisAlignment: CrossAxisAlignment.center,
-  mainAxisSize: MainAxisSize.max,
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: <Widget>[
-    TextButton(onPressed: () => {}, child: const Icon(Icons.home)),
-    TextButton(onPressed: () => {}, child: const Icon(Icons.tiktok)),
-    TextButton(onPressed: () => {}, child: const Icon(Icons.add_circle)),
-    TextButton(onPressed: () => {}, child: const Icon(Icons.subscriptions)),
-    TextButton(onPressed: () => {}, child: const Icon(Icons.my_library_music)),
-  ],
-);
+
 
 
 const primaryColor = Color(0xff4338CA);
