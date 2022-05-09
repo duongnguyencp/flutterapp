@@ -91,7 +91,7 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBarYoutube(),
+          const SliverAppBarYoutube(),
           SliverList(delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
             return ItemVideoCardView(viewModel: listVideos[0]);

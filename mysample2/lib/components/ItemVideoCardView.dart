@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../resource/VideoModel.dart';
+import 'CustomListTile.dart';
 import 'DetailModelBottomSheet.dart';
 
 class ItemVideoCardView extends StatelessWidget {
@@ -28,47 +29,7 @@ class ItemVideoCardView extends StatelessWidget {
                         fontFamily: "Roboto,Arial,sans-serif")))
           ],
         ),
-        ListTile(
-          minVerticalPadding: 12,
-          leading: CircleAvatar(
-              backgroundImage: NetworkImage(viewModel.srcChanelImage)),
-          trailing: IconButton(
-              padding: const EdgeInsets.all(0),
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {
-                showModalBottomSheet(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(22)),
-                    ),
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.transparent,
-                          child: const DetailModelBottomSheet());
-                    });
-              }),
-          isThreeLine: true,
-          subtitle: Row(
-            children: [
-              Text(viewModel.nameChanel, style: TextStyle(fontSize: 12)),
-              const SizedBox(
-                width: 2,
-              ),
-              const Text("•", style: TextStyle(fontSize: 12)),
-              const SizedBox(width: 2),
-              Text(viewModel.numberView, style: TextStyle(fontSize: 12)),
-              const SizedBox(width: 2),
-              const Text("•", style: TextStyle(fontSize: 12)),
-              const SizedBox(width: 2),
-              Text(viewModel.timeUploaded, style: TextStyle(fontSize: 12)),
-            ],
-          ),
-          title: Text(
-            viewModel.nameVideo,
-            style: const TextStyle(fontSize: 14),
-          ),
-        )
+        CustomListTile(videoModel:viewModel)
       ],
     );
   }
