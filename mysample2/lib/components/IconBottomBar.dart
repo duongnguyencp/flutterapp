@@ -21,7 +21,7 @@ class IconBottomBar extends StatelessWidget {
         IconButton(
             icon: Icon(icon),
             color: Colors.black,
-            iconSize: 20,
+            iconSize: 24,
             onPressed: onPressed),
         Text(text,
             style: const TextStyle(

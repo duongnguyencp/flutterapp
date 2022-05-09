@@ -10,6 +10,7 @@ class SliverAppBarYoutube extends StatefulWidget {
 }
 
 class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
+  final dataKey = GlobalKey();
   final bool _pinned = false;
 
   final bool _snapped = true;
@@ -30,6 +31,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
     _selectedCategoryIdx = index;
   }
 
+  double _ITEM_WIDTH = 70.0;
   final _scrollController = ScrollController();
 
   @override
@@ -47,22 +49,23 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
       backgroundColor: Colors.white,
       flexibleSpace: Container(
         decoration: const BoxDecoration(),
-        padding: const EdgeInsets.only(top: 25, left: 10),
+        padding: const EdgeInsets.only(top: 25),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
+                Padding(
+
+                  padding: const EdgeInsets.only(left:8),
+                  child:
                     Image.network(
                       "https://img.icons8.com/color/144/000000/youtube-play.png",
                       width: 36,
                       height: 36,
                     ),
                     // const Text("YouTube",style:TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color:Colors.black87))
-                  ],
+
                 ),
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -110,7 +113,11 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                       onTap: () => {
                         setState(() {
                           setIndexCategory(index);
-                        })
+
+                        }),
+
+                        // _scrollController.animateTo(index*_ITEM_WIDTH, duration: const Duration(milliseconds: 2), curve: Curves.ease)
+
                       },
                       child: Container(
                         margin: const EdgeInsets.only(right: 10),
@@ -124,7 +131,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                                 color: Colors.black,
                                 width: 1,
                                 style: BorderStyle.solid),
-                            borderRadius: BorderRadius.circular(12)),
+                            borderRadius: BorderRadius.circular(24)),
                       ),
                     );
                   }),
@@ -143,3 +150,5 @@ Future<void> callCastDialog(BuildContext context) async {
         return const CastSimpleDialog();
       });
 }
+
+

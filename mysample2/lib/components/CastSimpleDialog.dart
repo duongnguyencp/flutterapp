@@ -8,9 +8,10 @@ class CastSimpleDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: const Text('Connect to a device'),
+      title: const Text('Connect to a device',style: TextStyle(fontSize: 24)),
       children: <Widget>[
         SimpleDialogOption(
+          padding:const EdgeInsets.only(left:8),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -19,7 +20,7 @@ class CastSimpleDialog extends StatelessWidget {
                 iconData: Icons.downloading_outlined,
                 textContent: "No device found",
                 iconSize: 24,
-                textSize: 12,
+                textSize: 18,
                 event: () => {}),
             RowItemModelView(
                 iconData: Icons.connected_tv,
