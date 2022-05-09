@@ -27,7 +27,7 @@ class CustomListTile extends StatelessWidget {
         ),
         IconButton(
             padding: const EdgeInsets.all(0),
-            iconSize: 16,
+            iconSize: 24,
             icon: const Icon(Icons.more_vert),
             onPressed: () {
               showModalBottomSheet(

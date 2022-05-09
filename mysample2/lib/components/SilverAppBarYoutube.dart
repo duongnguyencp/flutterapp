@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'CastSimpleDialog.dart';
@@ -54,15 +53,22 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.network(
-                  "https://img.icons8.com/color/144/000000/youtube-play.png",
-                  width: 36,
-                  height: 36,
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Image.network(
+                      "https://img.icons8.com/color/144/000000/youtube-play.png",
+                      width: 36,
+                      height: 36,
+                    ),
+                    // const Text("YouTube",style:TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color:Colors.black87))
+                  ],
                 ),
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.start,
-                  spacing: 30,
+
+                  spacing: 15,
                   children: [
                     IconButton(
                       icon: const Icon(Icons.cast_outlined),
@@ -72,13 +78,16 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                       },
                     ),
                     const Icon(Icons.notifications_none_outlined, size: 24),
-                    const Icon(Icons.search_outlined),
-                    const CircleAvatar(
-                      maxRadius: 14,
-                      backgroundColor: Colors.green,
-                      child: Text("d", style: TextStyle(fontSize: 16)),
+                    const Icon(Icons.search_outlined, size: 24),
+                    const Padding(
+                      padding: EdgeInsets.only(right:8.0),
+                      child: CircleAvatar(
+                        maxRadius: 16,
+                        backgroundColor: Colors.green,
+                        child: Text("d", style: TextStyle(fontSize: 16)),
+                      ),
                     ),
-                    const SizedBox(width: 10)
+
                   ],
                 )
               ],
@@ -126,6 +135,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
     );
   }
 }
+
 Future<void> callCastDialog(BuildContext context) async {
   await showDialog(
       context: context,
