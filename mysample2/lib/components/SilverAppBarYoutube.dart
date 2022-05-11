@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mysample2/components/YoutubeSearchDelegate.dart';
 
 import 'CastSimpleDialog.dart';
 
@@ -56,21 +57,17 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-
-                  padding: const EdgeInsets.only(left:8),
-                  child:
-                    Image.network(
-                      "https://img.icons8.com/color/144/000000/youtube-play.png",
-                      width: 36,
-                      height: 36,
-                    ),
-                    // const Text("YouTube",style:TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color:Colors.black87))
-
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Image.network(
+                    "https://img.icons8.com/color/144/000000/youtube-play.png",
+                    width: 36,
+                    height: 36,
+                  ),
+                  // const Text("YouTube",style:TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color:Colors.black87))
                 ),
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.start,
-
                   spacing: 15,
                   children: [
                     IconButton(
@@ -81,16 +78,23 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                       },
                     ),
                     const Icon(Icons.notifications_none_outlined, size: 24),
-                    const Icon(Icons.search_outlined, size: 24),
+                    IconButton(
+                      icon: const Icon(Icons.search_outlined, size: 24),
+                      onPressed: () {
+                        showSearch(
+
+                            context: context,
+                            delegate: YoutubeSearchDelegate());
+                      },
+                    ),
                     const Padding(
-                      padding: EdgeInsets.only(right:8.0),
+                      padding: EdgeInsets.only(right: 8.0),
                       child: CircleAvatar(
                         maxRadius: 16,
                         backgroundColor: Colors.green,
                         child: Text("d", style: TextStyle(fontSize: 16)),
                       ),
                     ),
-
                   ],
                 )
               ],
@@ -113,11 +117,9 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                       onTap: () => {
                         setState(() {
                           setIndexCategory(index);
-
                         }),
 
                         // _scrollController.animateTo(index*_ITEM_WIDTH, duration: const Duration(milliseconds: 2), curve: Curves.ease)
-
                       },
                       child: Container(
                         margin: const EdgeInsets.only(right: 10),
@@ -150,5 +152,3 @@ Future<void> callCastDialog(BuildContext context) async {
         return const CastSimpleDialog();
       });
 }
-
-

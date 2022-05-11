@@ -46,18 +46,13 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     const title = 'Grid List';
     return const WrapBottomBar();
   }
 }
-
 
 class WrapBottomBar extends StatefulWidget {
   const WrapBottomBar({Key? key}) : super(key: key);
@@ -85,28 +80,22 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
     CustomScrollView(
       slivers: [
         const SliverAppBarYoutube(),
-        SliverList(delegate:
-        SliverChildBuilderDelegate((BuildContext context, int index) {
-          return ItemVideoCardView(viewModel: listVideos[0]);
-        })),
+        SliverList(
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+                  if(index>= listVideos.length){
+                    return const Offstage ();
+                  }
+          return ItemVideoCardView(viewModel: listVideos[index]);
+        }, childCount: listVideos.length)),
       ],
-    ),
-
-     CustomScrollView(
-       slivers: [
-         const SliverAppBarYoutube(),
-         SliverList(delegate:
-         SliverChildBuilderDelegate((BuildContext context, int index) {
-           return Text("short");
-         })),
-       ],
     ),
     CustomScrollView(
       slivers: [
         const SliverAppBarYoutube(),
         SliverList(delegate:
-        SliverChildBuilderDelegate((BuildContext context, int index) {
-          return ItemVideoCardView(viewModel: listVideos[0]);
+            SliverChildBuilderDelegate((BuildContext context, int index) {
+          return Text("short");
         })),
       ],
     ),
@@ -114,7 +103,16 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
       slivers: [
         const SliverAppBarYoutube(),
         SliverList(delegate:
-        SliverChildBuilderDelegate((BuildContext context, int index) {
+            SliverChildBuilderDelegate((BuildContext context, int index) {
+          return ItemVideoCardView(viewModel: listVideos[0]);
+        })),
+      ],
+    ),
+    CustomScrollView(
+      slivers: [
+        const SliverAppBarYoutube(),
+        SliverList(delegate:
+            SliverChildBuilderDelegate((BuildContext context, int index) {
           return Text("subscriptions");
         })),
       ],
@@ -123,7 +121,7 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
       slivers: [
         const SliverAppBarYoutube(),
         SliverList(delegate:
-        SliverChildBuilderDelegate((BuildContext context, int index) {
+            SliverChildBuilderDelegate((BuildContext context, int index) {
           return Text("Library");
         })),
       ],
@@ -134,17 +132,13 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: screen[selectedIndex],
       bottomNavigationBar: BottomAppBar(
           elevation: 0,
           color: Colors.transparent,
           child: SizedBox(
             height: 55,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             child: Container(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Row(
@@ -154,7 +148,7 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
                       selected: false,
                       text: "Home",
                       icon:
-                      selectedIndex == 0 ? Icons.home : Icons.home_outlined,
+                          selectedIndex == 0 ? Icons.home : Icons.home_outlined,
                       onPressed: () {
                         setState(() {
                           onClickItemBottomBar(1);
@@ -211,14 +205,3 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
