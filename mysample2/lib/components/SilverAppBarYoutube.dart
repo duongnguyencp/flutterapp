@@ -81,8 +81,8 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                     const Icon(Icons.notifications_none_outlined, size: 24),
                     IconButton(
                       icon: const Icon(Icons.search_outlined, size: 24),
-                      onPressed: () {
-                        showSearch(
+                      onPressed: () async {
+                        await showSearch(
 
                             context: context,
                             delegate: YoutubeSearchDelegate());
