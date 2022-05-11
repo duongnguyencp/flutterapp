@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mysample2/main.dart';
 
 const optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+const fontFamily ="Roboto,Arial,sans-serif";
 const Color shrinePink50 = Color(0xFFFEEAE6);
 const Color shrinePink100 = Color(0xFFFEDBD0);
 const Color shrinePink300 = Color(0xFFFBB8AC);

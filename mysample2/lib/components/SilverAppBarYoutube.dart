@@ -50,8 +50,9 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
       backgroundColor: Colors.white,
       flexibleSpace: Container(
         decoration: const BoxDecoration(),
-        padding: const EdgeInsets.only(top: 25),
+        padding: const EdgeInsets.all(0),
         child: Column(
+
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
