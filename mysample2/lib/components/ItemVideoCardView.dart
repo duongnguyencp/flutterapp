@@ -19,7 +19,7 @@ class ItemVideoCardView extends StatelessWidget {
           children: [
             Image.network(viewModel.srcVideoImage),
             Container(
-                margin: const EdgeInsets.only(right: 5,bottom:5),
+                margin: const EdgeInsets.only(right: 5),
                 padding: const EdgeInsets.all(5),
                 color: Colors.black.withOpacity(0.9),
                 child: Text(viewModel.timeVideo,

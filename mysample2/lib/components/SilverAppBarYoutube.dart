@@ -45,12 +45,12 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
     return SliverAppBar(
       pinned: _pinned,
       snap: _snapped,
-      collapsedHeight: 100,
+      collapsedHeight: 80,
       floating: _floating,
       backgroundColor: Colors.white,
       flexibleSpace: Container(
-        decoration: const BoxDecoration(),
-        padding: const EdgeInsets.all(0),
+        padding:  EdgeInsets.only(top:15, bottom: 5),
+        decoration:  BoxDecoration(),
         child: Column(
 
           children: [
@@ -106,7 +106,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
               endIndent: 10,
             ),
             Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.all(0),
               height: 30,
               child: ListView.builder(
                   shrinkWrap: true,
