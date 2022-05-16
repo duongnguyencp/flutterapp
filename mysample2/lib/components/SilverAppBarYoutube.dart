@@ -49,7 +49,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
       floating: _floating,
       backgroundColor: Colors.white,
       flexibleSpace: Container(
-        padding:  EdgeInsets.only(top:15, bottom: 5),
+        padding:  EdgeInsets.only(top:20, bottom: 5),
         decoration:  BoxDecoration(),
         child: Column(
 
