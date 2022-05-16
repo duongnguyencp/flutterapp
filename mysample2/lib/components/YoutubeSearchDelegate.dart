@@ -16,10 +16,10 @@ class YoutubeSearchDelegate extends SearchDelegate {
   InputDecorationTheme? get searchFieldDecorationTheme => InputDecorationTheme(
         contentPadding: const EdgeInsets.all(5),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide.none),
         filled: true,
-        fillColor: Colors.grey.shade400,
+
       );
 
   @override

@@ -49,8 +49,8 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
       floating: _floating,
       backgroundColor: Colors.white,
       flexibleSpace: Container(
-        padding:  EdgeInsets.only(top:20, bottom: 5),
-        decoration:  BoxDecoration(),
+        padding:  const EdgeInsets.only(top:30, bottom: 5),
+        decoration:  const BoxDecoration(),
         child: Column(
 
           children: [
@@ -100,11 +100,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                 )
               ],
             ),
-            const Divider(
-              height: 1,
-              indent: 5,
-              endIndent: 10,
-            ),
+
             Container(
               margin: const EdgeInsets.all(0),
               height: 30,
@@ -131,7 +127,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                                 ? Colors.grey
                                 : Colors.white,
                             border: Border.all(
-                                color: Colors.black,
+                                color: Colors.black.withOpacity(0.5),
                                 width: 1,
                                 style: BorderStyle.solid),
                             borderRadius: BorderRadius.circular(24)),

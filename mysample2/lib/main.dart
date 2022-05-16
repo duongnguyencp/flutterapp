@@ -83,9 +83,9 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
         SliverList(
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
-                  if(index>= listVideos.length){
-                    return const Offstage ();
-                  }
+          if (index >= listVideos.length) {
+            return const Offstage();
+          }
           return ItemVideoCardView(viewModel: listVideos[index]);
         }, childCount: listVideos.length)),
       ],
@@ -127,7 +127,7 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
       ],
     ),
   ];
-  late var selectedIndex = 1;
+  late var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -140,64 +140,85 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
             height: 55,
             width: MediaQuery.of(context).size.width,
             child: Container(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.all(0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconBottomBar(
-                      selected: false,
-                      text: "Home",
-                      icon:
-                          selectedIndex == 0 ? Icons.home : Icons.home_outlined,
-                      onPressed: () {
-                        setState(() {
-                          onClickItemBottomBar(1);
-                        });
-                      }),
-                  IconBottomBar(
-                      selected: false,
-                      text: "Shorts",
-                      icon: selectedIndex == 1
-                          ? Icons.music_note
-                          : Icons.music_note_outlined,
-                      onPressed: () {
-                        setState(() {
-                          onClickItemBottomBar(2);
-                        });
-                      }),
-                  Container(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: IconButton(
-                        icon: const Icon(Icons.add_circle_outline),
-                        iconSize: 24,
+                  Expanded(
+                    flex: 1,
+                    child: IconBottomBar(
+                        selected: false,
+                        text: "Home",
+                        icon: selectedIndex == 0
+                            ? Icons.home
+                            : Icons.home_outlined,
                         onPressed: () {
                           setState(() {
-                            onClickItemBottomBar(3);
+                            onClickItemBottomBar(1);
                           });
                         }),
                   ),
-                  IconBottomBar(
-                      selected: false,
-                      text: "Subscriptions",
-                      icon: selectedIndex == 3
-                          ? Icons.subscriptions
-                          : Icons.subscriptions_outlined,
-                      onPressed: () {
-                        setState(() {
-                          onClickItemBottomBar(4);
-                        });
-                      }),
-                  IconBottomBar(
-                      selected: false,
-                      text: "Library",
-                      icon: selectedIndex == 4
-                          ? Icons.video_library
-                          : Icons.video_library_outlined,
-                      onPressed: () {
-                        setState(() {
-                          onClickItemBottomBar(5);
-                        });
-                      }),
+                  Expanded(
+                    flex: 1,
+                    child: IconBottomBar(
+                        selected: false,
+                        text: "Shorts",
+                        icon: selectedIndex == 1
+                            ? Icons.music_note
+                            : Icons.music_note_outlined,
+                        onPressed: () {
+                          setState(() {
+                            onClickItemBottomBar(2);
+                          });
+                        }),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Center(
+                      child:
+                        IconButton(
+                            icon: const Icon(
+                              Icons.add_circle_outline,
+                              size: 28,
+                            ),
+                            iconSize: 28,
+                            onPressed: () {
+                              setState(() {
+                                onClickItemBottomBar(3);
+                              });
+                            }),
+
+
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: IconBottomBar(
+                        selected: false,
+                        text: "Subscriptions",
+                        icon: selectedIndex == 3
+                            ? Icons.subscriptions
+                            : Icons.subscriptions_outlined,
+                        onPressed: () {
+                          setState(() {
+                            onClickItemBottomBar(4);
+                          });
+                        }),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: IconBottomBar(
+                        selected: false,
+                        text: "Library",
+                        icon: selectedIndex == 4
+                            ? Icons.video_library
+                            : Icons.video_library_outlined,
+                        onPressed: () {
+                          setState(() {
+                            onClickItemBottomBar(5);
+                          });
+                        }),
+                  ),
                 ],
               ),
             ),

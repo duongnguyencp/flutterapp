@@ -16,8 +16,8 @@ class ArticleDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        Container(
+          margin: const EdgeInsets.all(8.0),
           child: Text(videoModel.nameVideo,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

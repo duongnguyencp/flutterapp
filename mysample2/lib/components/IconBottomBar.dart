@@ -18,16 +18,23 @@ class IconBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IconButton(
-            icon: Icon(icon),
-            color: Colors.black,
-            iconSize: 24,
-            onPressed: onPressed),
-        Text(text,
-            style: const TextStyle(
-                fontSize: 12,
-                height: .1,
-                fontFamily: 'Roboto,Arial,sans-serif')),
+
+        Expanded(
+          flex: 3,
+          child: IconButton(
+              icon: Icon(icon),
+              color: Colors.black,
+              iconSize: 24,
+              onPressed: onPressed),
+        ),
+        Expanded(
+          flex:1,
+          child: Text(text,
+              style: const TextStyle(
+                  fontSize: 8,
+                  height: .1,
+                  fontFamily: 'Roboto,Arial,sans-serif')),
+        ),
       ],
     );
   }
