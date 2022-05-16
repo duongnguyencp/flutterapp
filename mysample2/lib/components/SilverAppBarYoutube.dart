@@ -25,14 +25,18 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
     "Danh sách kết hợp",
     "Trò chơi",
     "Chương trình nấu ăn",
-    "Bóng đá"
+    "Bóng đá",
+    "Âm nhạc",
+    "Japanese",
+    "Tin tức",
+    "Đã xem"
   ];
 
   setIndexCategory(int index) {
     _selectedCategoryIdx = index;
   }
 
-  double _ITEM_WIDTH = 70.0;
+  double _ITEM_WIDTH = 150  ;
   final _scrollController = ScrollController();
 
   @override
@@ -45,14 +49,13 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
     return SliverAppBar(
       pinned: _pinned,
       snap: _snapped,
-      collapsedHeight: 80,
+      collapsedHeight: 90,
       floating: _floating,
       backgroundColor: Colors.white,
       flexibleSpace: Container(
-        padding:  const EdgeInsets.only(top:30, bottom: 5),
-        decoration:  const BoxDecoration(),
+        padding: const EdgeInsets.only(top: 25, bottom: 5),
+        decoration: const BoxDecoration(),
         child: Column(
-
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,7 +86,6 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                       icon: const Icon(Icons.search_outlined, size: 24),
                       onPressed: () async {
                         await showSearch(
-
                             context: context,
                             delegate: YoutubeSearchDelegate());
                       },
@@ -100,7 +102,6 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                 )
               ],
             ),
-
             Container(
               margin: const EdgeInsets.all(0),
               height: 30,
@@ -109,16 +110,25 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                   controller: _scrollController,
                   scrollDirection: Axis.horizontal,
                   itemCount: categorys.length,
+                  reverse: false,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () => {
                         setState(() {
                           setIndexCategory(index);
                         }),
-
-                        // _scrollController.animateTo(index*_ITEM_WIDTH, duration: const Duration(milliseconds: 2), curve: Curves.ease)
+                        WidgetsBinding.instance?.addPostFrameCallback((_) {
+                          double position = index * _ITEM_WIDTH;
+                          _scrollController.animateTo(position,
+                              duration: const Duration(milliseconds: 1000),
+                              curve: Curves.ease);
+                        })
                       },
                       child: Container(
+                        constraints: BoxConstraints(
+                          minWidth: 50,
+
+                        ),
                         margin: const EdgeInsets.only(right: 10),
                         padding: const EdgeInsets.all(5),
                         child: Text(categorys[index]),

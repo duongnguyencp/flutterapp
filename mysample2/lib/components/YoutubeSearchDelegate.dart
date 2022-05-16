@@ -82,7 +82,7 @@ class YoutubeSearchDelegate extends SearchDelegate {
           itemBuilder: (context, index) {
             final video = results[index];
             if(video==null){
-              return Offstage();
+              return const Offstage();
             }
             return Padding(
               padding:
