@@ -53,6 +53,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
       floating: _floating,
       backgroundColor: Colors.white,
       flexibleSpace: Container(
+        margin: const EdgeInsets.only(top:5),
         padding: const EdgeInsets.only(top: 25, bottom: 5),
         decoration: const BoxDecoration(),
         child: Column(
@@ -117,7 +118,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                         setState(() {
                           setIndexCategory(index);
                         }),
-                        WidgetsBinding.instance?.addPostFrameCallback((_) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
                           double position = index * _ITEM_WIDTH;
                           _scrollController.animateTo(position,
                               duration: const Duration(milliseconds: 1000),

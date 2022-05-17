@@ -12,6 +12,7 @@ import 'package:mysample2/resource/data.dart';
 import 'components/IconBottomBar.dart';
 import 'components/ItemVideoCardView.dart';
 import 'components/ModalSheetAdd.dart';
+import 'components/ShortScreen.dart';
 import 'components/SilverAppBarYoutube.dart';
 
 void main() {
@@ -90,14 +91,10 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
         }, childCount: listVideos.length)),
       ],
     ),
-    CustomScrollView(
-      slivers: [
-        const SliverAppBarYoutube(),
-        SliverList(delegate:
-            SliverChildBuilderDelegate((BuildContext context, int index) {
-          return Text("short");
-        })),
-      ],
+    Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: ShortsScreen(),
     ),
     CustomScrollView(
       slivers: [
@@ -175,20 +172,17 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
                   Expanded(
                     flex: 1,
                     child: Center(
-                      child:
-                        IconButton(
-                            icon: const Icon(
-                              Icons.add_circle_outline,
-                              size: 28,
-                            ),
-                            iconSize: 28,
-                            onPressed: () {
-                              setState(() {
-                                onClickItemBottomBar(3);
-                              });
-                            }),
-
-
+                      child: IconButton(
+                          icon: const Icon(
+                            Icons.add_circle_outline,
+                            size: 28,
+                          ),
+                          iconSize: 28,
+                          onPressed: () {
+                            setState(() {
+                              onClickItemBottomBar(3);
+                            });
+                          }),
                     ),
                   ),
                   Expanded(
