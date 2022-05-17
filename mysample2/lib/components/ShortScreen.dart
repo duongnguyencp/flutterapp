@@ -151,6 +151,7 @@ class StateProfileIntro extends State<ProfileIntro> {
           spacing: 10,
           children: [
             CircleAvatar(
+              maxRadius: 18,
               backgroundImage: AssetImage(listShorts[0].srcChanelImage),
             ),
             Text(listShorts[0].nameChanel,
