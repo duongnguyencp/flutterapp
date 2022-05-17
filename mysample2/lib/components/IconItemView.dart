@@ -17,12 +17,12 @@ class IconItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 15,
+      spacing: 0,
       direction: Axis.vertical,
       crossAxisAlignment: WrapCrossAlignment.center,
       alignment: WrapAlignment.center,
       children: [
-        Icon(icon,color:Colors.white,),
+        IconButton(icon:Icon(icon),color:selected?Colors.blue:Colors.white, onPressed:onPressed),
         Text(text,
             style: const TextStyle(
 

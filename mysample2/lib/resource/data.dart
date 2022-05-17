@@ -1,5 +1,7 @@
 import 'package:mysample2/resource/VideoModel.dart';
 
+import 'ShortModel.dart';
+
 var listVideos = [
   VideoModel(
       srcVideoImage: "https://i.ytimg.com/vi/4rWY9q5KhEM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAiawQi8bHylwTNbTyoTx4gb1_VgA",
@@ -24,4 +26,16 @@ var listVideos = [
       timeUploaded: "46 phút trước"
   )
 
+];
+
+var listShorts = [
+    ShortModel(
+      srcVideoImage: "resource/Genshin_Impact_cover.jpg",
+      srcChanelImage: "resource/short_profile.jpg",
+      listTag: ["short","#genshinimpact"],
+      nameChanel: "Michael Masaru",
+      numberComment: "753",
+      numberDislike: "Dislike",
+      numberLike: "154N", nameVideo: "When you try to collect Crystal Cores... :') - Eula🔥",
+    )
 ];
