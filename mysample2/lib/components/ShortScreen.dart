@@ -120,6 +120,11 @@ class ProfileIntro extends StatefulWidget {
 }
 
 class StateProfileIntro extends State<ProfileIntro> {
+  bool isSubcribe = false;
+  String textScribe = "SUBSCRIBE";
+
+  void onClickSubscribe() {}
+
   @override
   Widget build(BuildContext context) {
     var listTag = "";
@@ -136,7 +141,6 @@ class StateProfileIntro extends State<ProfileIntro> {
           width: 250,
           child: Text(listShorts[0].nameVideo + listTag,
               maxLines: 2,
-
               style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -145,7 +149,7 @@ class StateProfileIntro extends State<ProfileIntro> {
         ),
         Wrap(
           direction: Axis.horizontal,
-          crossAxisAlignment:  WrapCrossAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
           alignment: WrapAlignment.center,
           runAlignment: WrapAlignment.center,
           spacing: 10,
@@ -160,16 +164,55 @@ class StateProfileIntro extends State<ProfileIntro> {
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                     fontFamily: 'Roboto,Arial,sans-serif')),
-          Container(
-            padding: EdgeInsets.all(5),
-            
-            decoration: BoxDecoration(color:shrineErrorRed,borderRadius: BorderRadius.all(Radius.circular(5))),
-            child:Text("SUBSCRIBE", style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontFamily: 'Roboto,Arial,sans-serif')),
-          )
+            GestureDetector(
+              onTap: () {
+                if (isSubcribe == true) {
+                  showDialog<String>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: Text(
+                                "Unsubscribe from " + listShorts[0].nameChanel),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text('CANCEL'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isSubcribe = false;
+                                    textScribe = "SUBSCRIBE";
+                                  });
+
+                                  Navigator.pop(context, 'OK');
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ));
+                } else {
+                  setState(() {
+                    isSubcribe = true;
+                    textScribe = "SUBSCRIBED";
+                  });
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    color: (isSubcribe == false)
+                        ? shrineErrorRed
+                        : Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.all(const Radius.circular(5))),
+                child: Text(textScribe,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontFamily: 'Roboto,Arial,sans-serif')),
+              ),
+            )
           ],
         )
       ],
