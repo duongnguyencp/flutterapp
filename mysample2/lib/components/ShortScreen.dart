@@ -136,7 +136,7 @@ class StateProfileIntro extends State<ProfileIntro> {
           width: 250,
           child: Text(listShorts[0].nameVideo + listTag,
               maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+
               style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -161,7 +161,9 @@ class StateProfileIntro extends State<ProfileIntro> {
                     color: Colors.white,
                     fontFamily: 'Roboto,Arial,sans-serif')),
           Container(
-            decoration: BoxDecoration(color:shrineErrorRed),
+            padding: EdgeInsets.all(5),
+            
+            decoration: BoxDecoration(color:shrineErrorRed,borderRadius: BorderRadius.all(Radius.circular(5))),
             child:Text("SUBSCRIBE", style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
