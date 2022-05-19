@@ -17,7 +17,7 @@ class ItemVideoCardView extends StatelessWidget {
         Stack(
           alignment: AlignmentDirectional.bottomEnd,
           children: [
-            Image.network(viewModel.srcVideoImage),
+            Image(image:AssetImage(viewModel.srcVideoImage)),
             Container(
                 margin: const EdgeInsets.only(right: 5),
                 padding: const EdgeInsets.all(5),

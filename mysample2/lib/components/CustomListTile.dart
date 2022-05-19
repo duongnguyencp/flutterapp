@@ -21,8 +21,7 @@ class CustomListTile extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                   child: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(videoModel.srcChanelImage))),
+                      backgroundImage: AssetImage(videoModel.srcChanelImage))),
             ),
             Expanded(
                 flex: 3,

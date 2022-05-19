@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mysample2/components/IconItemView.dart';
@@ -13,7 +14,8 @@ import 'IconBottomBar.dart';
  */
 
 class ShortsScreen extends StatefulWidget {
-  const ShortsScreen({Key? key}) : super(key: key);
+    Function() onPressedCamera;
+   ShortsScreen({Key? key, required this.onPressedCamera}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ShortsScreenState();
@@ -36,12 +38,21 @@ class _ShortsScreenState extends State<ShortsScreen> {
               height: 500,
               image: AssetImage(listShorts[0].srcVideoImage),
               fit: BoxFit.fitHeight),
-          const Positioned(
+          Positioned(
               top: 30,
-              right: 10,
-              child: Icon(Icons.photo_camera_outlined,
-                  size: 24, color: Colors.white)),
-          const Positioned(bottom: 10, left: 10, child: ProfileIntro()),
+              right: 0,
+              child: IconButton(
+                icon: Icon(Icons.photo_camera_outlined),
+                iconSize: 24,
+                color: Colors.white,
+                onPressed: widget.onPressedCamera
+              )),
+          Positioned(
+              bottom: 10,
+              left: 10,
+              child: ProfileIntro(
+
+              )),
           Positioned(
             bottom: 10,
             right: 0,
@@ -110,10 +121,13 @@ class _ShortsScreenState extends State<ShortsScreen> {
       ),
     );
   }
+
+
 }
 
 class ProfileIntro extends StatefulWidget {
-  const ProfileIntro({Key? key}) : super(key: key);
+
+  ProfileIntro({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => StateProfileIntro();
@@ -138,14 +152,24 @@ class StateProfileIntro extends State<ProfileIntro> {
       crossAxisAlignment: WrapCrossAlignment.start,
       children: [
         SizedBox(
-          width: 250,
-          child: Text(listShorts[0].nameVideo + listTag,
-              maxLines: 2,
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                  fontFamily: 'Roboto,Arial,sans-serif')),
+          width: 350,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(listShorts[0].nameVideo,
+                maxLines: 1,
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontFamily: 'Roboto,Arial,sans-serif')),
+            Text(listTag,
+                maxLines: 1,
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontFamily: 'Roboto,Arial,sans-serif')),
+          ]),
         ),
         Wrap(
           direction: Axis.horizontal,

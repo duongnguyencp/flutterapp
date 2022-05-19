@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -9,6 +10,7 @@ import 'package:mysample2/constants.dart';
 import 'package:mysample2/resource/VideoModel.dart';
 import 'package:mysample2/resource/data.dart';
 
+import 'components/CameraPreview.dart';
 import 'components/IconBottomBar.dart';
 import 'components/ItemVideoCardView.dart';
 import 'components/ModalSheetAdd.dart';
@@ -19,6 +21,7 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.white,
   ));
+
   runApp(const MyApp());
 }
 
@@ -77,57 +80,69 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
     }
   }
 
-  final List<Widget> screen = [
-    CustomScrollView(
-      slivers: [
-        const SliverAppBarYoutube(),
-        SliverList(
-            delegate:
-                SliverChildBuilderDelegate((BuildContext context, int index) {
-          if (index >= listVideos.length) {
-            return const Offstage();
-          }
-          return ItemVideoCardView(viewModel: listVideos[index]);
-        }, childCount: listVideos.length)),
-      ],
-    ),
-    Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: ShortsScreen(),
-    ),
-    CustomScrollView(
-      slivers: [
-        const SliverAppBarYoutube(),
-        SliverList(delegate:
-            SliverChildBuilderDelegate((BuildContext context, int index) {
-          return ItemVideoCardView(viewModel: listVideos[0]);
-        })),
-      ],
-    ),
-    CustomScrollView(
-      slivers: [
-        const SliverAppBarYoutube(),
-        SliverList(delegate:
-            SliverChildBuilderDelegate((BuildContext context, int index) {
-          return Text("subscriptions");
-        })),
-      ],
-    ),
-    CustomScrollView(
-      slivers: [
-        const SliverAppBarYoutube(),
-        SliverList(delegate:
-            SliverChildBuilderDelegate((BuildContext context, int index) {
-          return Text("Library");
-        })),
-      ],
-    ),
-  ];
   late var selectedIndex = 0;
-
+  late CameraDescription cameraFirst;
   @override
   Widget build(BuildContext context) {
+    List<Widget> screen = [
+      CustomScrollView(
+        slivers: [
+          const SliverAppBarYoutube(),
+          SliverList(
+              delegate:
+                  SliverChildBuilderDelegate((BuildContext context, int index) {
+            if (index >= listVideos.length) {
+              return const Offstage();
+            }
+            return ItemVideoCardView(viewModel: listVideos[index]);
+          }, childCount: listVideos.length)),
+        ],
+      ),
+      Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: ShortsScreen(onPressedCamera: () async {
+          WidgetsFlutterBinding.ensureInitialized();
+
+          final cameras = await availableCameras();
+
+          cameraFirst = cameras.first;
+          setState(() {
+            selectedIndex=5;
+          });
+        }),
+      ),
+      CustomScrollView(
+        slivers: [
+          const SliverAppBarYoutube(),
+          SliverList(delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            return ItemVideoCardView(viewModel: listVideos[0]);
+          })),
+        ],
+      ),
+      CustomScrollView(
+        slivers: [
+          const SliverAppBarYoutube(),
+          SliverList(delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            return Text("subscriptions");
+          })),
+        ],
+      ),
+      CustomScrollView(
+        slivers: [
+          const SliverAppBarYoutube(),
+          SliverList(delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            return Text("Library");
+          })),
+        ],
+      ),
+    ];
+    if(selectedIndex==5){
+      return CameraPreviewYoutube(camera: cameraFirst,);
+    }
     return Scaffold(
       body: screen[selectedIndex],
       bottomNavigationBar: BottomAppBar(
@@ -218,5 +233,13 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
             ),
           )),
     );
+  }
+
+  Future<void> openCamera() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    final cameras = await availableCameras();
+
+    final firstCamera = cameras.first;
   }
 }

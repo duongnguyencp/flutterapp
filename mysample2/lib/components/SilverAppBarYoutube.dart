@@ -62,9 +62,9 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Image.network(
-                    "https://img.icons8.com/color/144/000000/youtube-play.png",
+                  padding:  EdgeInsets.only(left: 8),
+                  child: Image(
+                    image:AssetImage("resource/youtube-play.png"),
                     width: 36,
                     height: 36,
                   ),
