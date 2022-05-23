@@ -228,7 +228,7 @@ class StateProfileIntro extends State<ProfileIntro> {
                     color: (isSubcribe == false)
                         ? shrineErrorRed
                         : Colors.black.withOpacity(0.5),
-                    borderRadius: BorderRadius.all(const Radius.circular(5))),
+                    borderRadius: const BorderRadius.all(Radius.circular(5))),
                 child: Text(textScribe,
                     style: const TextStyle(
                         fontSize: 14,

@@ -85,8 +85,8 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                     const Icon(Icons.notifications_none_outlined, size: 24),
                     IconButton(
                       icon: const Icon(Icons.search_outlined, size: 24),
-                      onPressed: () async {
-                        await showSearch(
+                      onPressed: ()  {
+                         showSearch(
                             context: context,
                             delegate: YoutubeSearchDelegate());
                       },
@@ -118,7 +118,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                         setState(() {
                           setIndexCategory(index);
                         }),
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                        WidgetsBinding.instance?.addPostFrameCallback((_) {
                           double position = index * _ITEM_WIDTH;
                           _scrollController.animateTo(position,
                               duration: const Duration(milliseconds: 1000),
