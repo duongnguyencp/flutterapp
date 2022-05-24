@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:image/image.dart' as imagedart;
 
 class CameraPreviewYoutube extends StatefulWidget {
   const CameraPreviewYoutube({Key? key, required this.camera})
@@ -67,7 +68,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 50),
+                  margin: const EdgeInsets.only(bottom: 50),
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
@@ -86,7 +87,6 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
               key: key,
               width: 100,
               height: 500,
-
               decoration: BoxDecoration(
                 border: Border.all(
                     color: Colors.yellow, width: 1.0, style: BorderStyle.solid),
@@ -108,9 +108,9 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
     int? width = properties.width;
     int? height = properties.height;
     // double offset = (height!-width!)/2;
+    // imagedart.imageC
     File croppedFile =
-        await FlutterNativeImage.cropImage(filePath, x, y, 100, 500);
-
+        await FlutterNativeImage.cropImage(filePath,x, y, width!, height! );
     return croppedFile.path;
   }
 }
@@ -125,16 +125,14 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Display picture")),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [Positioned(
-            top: 152,
-            left: 146,
-            child: Transform(
-                transform: Matrix4.identity()..rotateZ(math.pi / 2),
-                child: Image.file(File(imagePath))))],
-      ),
+      appBar: AppBar(title: Text("Display picture" + imagePath)),
+      body: Stack(fit: StackFit.expand, children: [
+        Image.file(File(imagePath)),
+        Positioned(
+            top: 0,
+            left: 0,
+            child: Container(width: 100, height: 500, color: Colors.red))
+      ]),
     );
   }
 }

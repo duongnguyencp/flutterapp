@@ -16,6 +16,7 @@ import 'components/ItemVideoCardView.dart';
 import 'components/ModalSheetAdd.dart';
 import 'components/ShortScreen.dart';
 import 'components/SilverAppBarYoutube.dart';
+import 'components/SubScreen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -121,15 +122,16 @@ class _WrapBottomBarState extends State<WrapBottomBar> {
           })),
         ],
       ),
-      CustomScrollView(
-        slivers: [
-          const SliverAppBarYoutube(),
-          SliverList(delegate:
-              SliverChildBuilderDelegate((BuildContext context, int index) {
-            return Text("subscriptions");
-          })),
-        ],
-      ),
+      // CustomScrollView(
+      //   slivers: [
+      //     // const SliverAppBarYoutube(),
+      //     SliverList(delegate:
+      //         SliverChildBuilderDelegate(s(BuildContext context, int index) {
+      //       return Text("subscriptions");
+      //     })),
+      //   ],
+      // ),
+      SubScreen(),
       CustomScrollView(
         slivers: [
           const SliverAppBarYoutube(),

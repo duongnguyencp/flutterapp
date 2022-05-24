@@ -42,7 +42,7 @@ class _ShortsScreenState extends State<ShortsScreen> {
               top: 30,
               right: 0,
               child: IconButton(
-                icon: Icon(Icons.photo_camera_outlined),
+                icon: const Icon(Icons.photo_camera_outlined),
                 iconSize: 24,
                 color: Colors.white,
                 onPressed: widget.onPressedCamera

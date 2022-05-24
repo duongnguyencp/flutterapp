@@ -118,7 +118,7 @@ class _SliverAppBarYoutubeState extends State<SliverAppBarYoutube> {
                         setState(() {
                           setIndexCategory(index);
                         }),
-                        WidgetsBinding.instance?.addPostFrameCallback((_) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
                           double position = index * _ITEM_WIDTH;
                           _scrollController.animateTo(position,
                               duration: const Duration(milliseconds: 1000),
