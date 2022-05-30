@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'dart:math' as math;
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image/image.dart' as imagedart;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class CameraPreviewYoutube extends StatefulWidget {
   const CameraPreviewYoutube({Key? key, required this.camera})
@@ -22,6 +26,8 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   late CameraController _controller;
   late Future<void> _initControllerFuture;
   bool _isCameraPermissionGranted = false;
+  List<double>? _accelerometerValues;
+  final _streamSubscriptions = <StreamSubscription<dynamic>>[];
 
   @override
   void initState() {
@@ -30,12 +36,28 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
         overlays: [SystemUiOverlay.bottom]);
     _controller = CameraController(widget.camera, ResolutionPreset.high);
     _initControllerFuture = _controller.initialize();
+
+    _streamSubscriptions.add(
+      gyroscopeEvents.listen(
+        (GyroscopeEvent  event) {
+          setState(() {
+            _accelerometerValues = <double>[event.x, event.y, event.z];
+            pitchValue=event.x*180/pi;
+            rollValue=event.y*180/pi;
+            checkTilt();
+          });
+        },
+      ),
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    _controller.dispose();
+    for (final subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
   }
 
   // getPermissionStatus() async {
@@ -54,8 +76,73 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   //     log('Camera Permission: DENIED');
   //   }
   // }
+  bool isPermitReading = false;
+  late double pitchValue;
+  late double rollValue;
+  late double yawValue;
+  late double maxPitch = 34;
+  late double maxRoll = 8;
+  late double permitTilt = 0.25;
+  late double ballRadius = 2;
+  late double ballDrawingMargin = ballRadius * 1.2;
+  late double ballPositionX = 0.0;
+  late double ballPositionY = 0.0;
+
+  void checkTilt() {
+    var width = 135;
+    var height = 90;
+    if (pitchValue < -90) {
+      pitchValue = pitchValue.abs() - 180;
+    } else if (pitchValue > 90) {
+      pitchValue = 180 - pitchValue;
+    }
+    if (rollValue < -90) {
+      rollValue = rollValue.abs() - 180;
+    } else if (rollValue > 90) {
+      rollValue = 180 - rollValue;
+    }
+    var validWidth = width - ballDrawingMargin * 2;
+    var validHeight = height - ballDrawingMargin * 2;
+    if (rollValue < (maxRoll * -1)) {
+      ballPositionX = validWidth * 0.0;
+    } else if (rollValue > maxRoll) {
+      ballPositionX = validWidth * 1.00;
+    } else {
+      var center = validWidth / 2;
+      if (rollValue < 0) {
+        ballPositionX = center - (rollValue.abs() / maxRoll) * center;
+      } else {
+        ballPositionX = center + (rollValue.abs() / maxRoll) * center;
+      }
+    }
+
+    if (pitchValue < (maxPitch * -1)) {
+      ballPositionY = validHeight * 0.0;
+    } else if (pitchValue > maxPitch) {
+      ballPositionY = validHeight * 1.00;
+    } else {
+      var center = validWidth / 2;
+      if (pitchValue < 0) {
+        ballPositionY = center - (pitchValue.abs() / maxPitch) * center;
+      } else {
+        ballPositionY = center + (pitchValue.abs() / maxPitch) * center;
+      }
+    }
+    var permitDistance = width * permitTilt;
+    var distance = calcDistance(
+        validWidth * 0.5, validHeight * 0.5, ballPositionX, ballPositionY);
+    if (distance <= permitDistance) {
+      isPermitReading = true;
+    } else {
+      isPermitReading = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final accelerometer =
+        _accelerometerValues?.map((double v) => v.toStringAsFixed(1)).toList();
+
     return Stack(
         alignment: AlignmentDirectional.topStart,
         fit: StackFit.expand,
@@ -78,11 +165,10 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
             },
           ),
           Container(color: Colors.cyan.withOpacity(0.1)),
-
           Center(
             child: Container(
               key: key,
-              width: MediaQuery.of(context).size.width/3,
+              width: MediaQuery.of(context).size.width / 3,
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 border: Border.all(
@@ -122,6 +208,12 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
               ),
             ),
           ),
+          Center(
+            child: (isPermitReading == false)
+                ? Text('$accelerometer',
+                    style: const TextStyle(color: Colors.red, fontSize: 20))
+                : const Text("Goc da chinh xac", style: TextStyle(color:Colors.green,fontSize: 20)),
+          )
         ]);
   }
 
@@ -158,6 +250,10 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
       }
     }
     return dst;
+  }
+
+  double calcDistance(double x1, double y1, double x2, double y2) {
+    return sqrt((x2 - x1) * (x2 - x1) - (y2 - y1) * (y2 - y1));
   }
 }
 
