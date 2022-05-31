@@ -1,7 +1,7 @@
 import 'package:mysample2/resource/VideoModel.dart';
 
 import 'ShortModel.dart';
-
+bool isPermitReading = false;
 var listVideos = [
   VideoModel(
       srcVideoImage: "resource/video1.jpg",

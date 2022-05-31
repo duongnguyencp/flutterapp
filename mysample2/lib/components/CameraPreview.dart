@@ -3,15 +3,21 @@ import 'dart:developer';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
-
+import 'package:flutter_sensors/flutter_sensors.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image/image.dart' as imagedart;
+import 'package:mysample2/components/BallCustomClipPath.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sensors_plus/sensors_plus.dart';
+
+// import 'package:sensors_plus/sensors_plus.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
+import 'package:motion_sensors/motion_sensors.dart';
+
+import '../resource/data.dart';
 
 class CameraPreviewYoutube extends StatefulWidget {
   const CameraPreviewYoutube({Key? key, required this.camera})
@@ -29,6 +35,18 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   List<double>? _accelerometerValues;
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
 
+  // Future<void> useFlutterSensor() async {
+  //   bool accelerometerAvailable =
+  //       await SensorManager().isSensorAvailable(Sensors.ROTATION);
+  //   final stream = await SensorManager().sensorUpdates(sensorId: TYPE_LIGHT);
+  //   _lightSubscription = stream.listen((sensorEvent) {
+  //     setState(() {
+  //       _lightData = sensorEvent.data;
+  //     });
+  //   });
+  // }
+  Vector3 _orientation = Vector3.zero();
+
   @override
   void initState() {
     super.initState();
@@ -37,18 +55,46 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
     _controller = CameraController(widget.camera, ResolutionPreset.high);
     _initControllerFuture = _controller.initialize();
 
-    _streamSubscriptions.add(
-      gyroscopeEvents.listen(
-        (GyroscopeEvent  event) {
+    // _streamSubscriptions.add(
+    //   accelerometerEvents.listen(
+    //     (AccelerometerEvent event) {
+    //       setState(()  {
+    //         double x = event.x, y = event.y, z = event.z;
+    //         double norm_Of_g = math
+    //             .sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
+    //         x = event.x / norm_Of_g;
+    //         y = event.y / norm_Of_g;
+    //         z = event.z / norm_Of_g;
+    //
+    //         double xInclination = -(math.asin(x) * (180 / math.pi));
+    //         double yInclination = (math.acos(y) * (180 / math.pi));
+    //         double zInclination = (math.atan(z) * (180 / math.pi));
+    //
+    //         rollValue = xInclination;
+    //         // String yAngle = Inclination;
+    //         pitchValue = zInclination;
+    //         // _accelerometerValues = <double>[event.x, event.y, event.z];
+    //         // pitchValue = event.x * 180 / pi;
+    //         // rollValue = event.z * 180 / pi;
+    //          checkTilt();
+    //
+    //       });
+    //     },
+    //   ),
+    // );
+
+    motionSensors.isOrientationAvailable().then((available) {
+      if (available) {
+        motionSensors.orientation.listen((OrientationEvent event) {
           setState(() {
-            _accelerometerValues = <double>[event.x, event.y, event.z];
-            pitchValue=event.x*180/pi;
-            rollValue=event.z*180/pi;
+            _orientation.setValues(event.yaw, event.pitch, event.roll);
+            pitchValue = event.pitch * 180 / pi;
+            rollValue = event.roll * 180 / pi;
             checkTilt();
           });
-        },
-      ),
-    );
+        });
+      }
+    });
   }
 
   @override
@@ -76,7 +122,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   //     log('Camera Permission: DENIED');
   //   }
   // }
-  bool isPermitReading = false;
+
   late double pitchValue;
   late double rollValue;
   late double yawValue;
@@ -88,7 +134,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   late double ballPositionX = 0.0;
   late double ballPositionY = 0.0;
 
-  void checkTilt() {
+  checkTilt() {
     var width = 100;
     var height = 100;
     if (pitchValue < -90) {
@@ -209,11 +255,23 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
             ),
           ),
           Center(
-            child: (isPermitReading == false)
-                ? Text('スマートフォンの角度を調整してください',
-                    style: const TextStyle(color: Colors.red, fontSize: 20))
-                : const Text("", style: TextStyle(color:Colors.green,fontSize: 20)),
-          )
+              child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 0),
+                  opacity: isPermitReading == false ? 1 : 0.0,
+                  child: const Text(
+                    'スマートフォンの角度を調整してください',
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                  ))),
+          Positioned(
+              left: 50,
+              top: 200,
+              width: 100,
+              height: 100,
+              child: CustomPaint(
+
+                  painter:MyPainter(ballPositionX,ballPositionY,isPermitReading)
+                )
+              )
         ]);
   }
 
