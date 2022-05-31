@@ -58,7 +58,7 @@ class MyPainter extends CustomPainter {
     double validWidth = width - ballDrawingMargin*2;
     double validHeight = height - ballDrawingMargin*2;
     canvas.drawLine(Offset(width/2,0),Offset(width/2,height),paint);
-    paint..color=Colors.transparent..strokeWidth=1..style=PaintingStyle.stroke;
+    paint..color=Colors.green..strokeWidth=1..style=PaintingStyle.stroke;
     canvas.drawCircle(Offset(validWidth*0.5+ballDrawingMargin, validHeight*0.5+ballDrawingMargin),validWidth*permitTilt, paint);
     paint=Paint()..color=Colors.green..strokeWidth=5;
     if(isPermitReading==false){
