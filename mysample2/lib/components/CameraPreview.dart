@@ -43,7 +43,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
           setState(() {
             _accelerometerValues = <double>[event.x, event.y, event.z];
             pitchValue=event.x*180/pi;
-            rollValue=event.y*180/pi;
+            rollValue=event.z*180/pi;
             checkTilt();
           });
         },
@@ -89,8 +89,8 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   late double ballPositionY = 0.0;
 
   void checkTilt() {
-    var width = 135;
-    var height = 90;
+    var width = 100;
+    var height = 100;
     if (pitchValue < -90) {
       pitchValue = pitchValue.abs() - 180;
     } else if (pitchValue > 90) {
@@ -121,7 +121,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
     } else if (pitchValue > maxPitch) {
       ballPositionY = validHeight * 1.00;
     } else {
-      var center = validWidth / 2;
+      var center = validHeight / 2;
       if (pitchValue < 0) {
         ballPositionY = center - (pitchValue.abs() / maxPitch) * center;
       } else {
@@ -210,9 +210,9 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
           ),
           Center(
             child: (isPermitReading == false)
-                ? Text('$accelerometer',
+                ? Text('スマートフォンの角度を調整してください',
                     style: const TextStyle(color: Colors.red, fontSize: 20))
-                : const Text("Goc da chinh xac", style: TextStyle(color:Colors.green,fontSize: 20)),
+                : const Text("", style: TextStyle(color:Colors.green,fontSize: 20)),
           )
         ]);
   }
