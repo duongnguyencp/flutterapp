@@ -82,7 +82,6 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
     //     },
     //   ),
     // );
-
     motionSensors.isOrientationAvailable().then((available) {
       if (available) {
         motionSensors.orientation.listen((OrientationEvent event) {
@@ -127,7 +126,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   late double rollValue;
   late double yawValue;
   late double maxPitch = 34;
-  late double maxRoll = 8;
+  late double maxRoll = 34;
   late double permitTilt = 0.25;
   late double ballRadius = 2;
   late double ballDrawingMargin = ballRadius * 1.2;
@@ -265,13 +264,19 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
           Positioned(
               left: 50,
               top: 200,
-              width: 100,
-              height: 100,
-              child: CustomPaint(
-
-                  painter:MyPainter(ballPositionX,ballPositionY,isPermitReading)
-                )
-              )
+              child: Column(children: [
+                CustomPaint(
+                    painter: MyPainter(
+                        ballPositionX, ballPositionY, isPermitReading)),
+                // Text("X:$ballPositionX Y:$ballPositionY",style: const TextStyle(fontSize: 5),)
+              ])),
+          Positioned(
+              left: 50,
+              top: 350,
+              child: Text(
+                "X:$ballPositionX Y:$ballPositionY",
+                style: const TextStyle(fontSize: 5),
+              ))
         ]);
   }
 
@@ -311,7 +316,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   }
 
   double calcDistance(double x1, double y1, double x2, double y2) {
-    return sqrt((x2 - x1) * (x2 - x1) - (y2 - y1) * (y2 - y1));
+    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
   }
 }
 

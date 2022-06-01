@@ -53,20 +53,21 @@ class MyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint=Paint()..color=Colors.green..strokeWidth=5;
+    var paint=Paint()..color=Colors.green..strokeWidth=1;
     canvas.drawLine(Offset(0,height/2),Offset(width,height/2),paint);
     double validWidth = width - ballDrawingMargin*2;
     double validHeight = height - ballDrawingMargin*2;
     canvas.drawLine(Offset(width/2,0),Offset(width/2,height),paint);
     paint..color=Colors.green..strokeWidth=1..style=PaintingStyle.stroke;
     canvas.drawCircle(Offset(validWidth*0.5+ballDrawingMargin, validHeight*0.5+ballDrawingMargin),validWidth*permitTilt, paint);
-    paint=Paint()..color=Colors.green..strokeWidth=5;
+    paint=Paint()..color=Colors.green..strokeWidth=1;
     if(isPermitReading==false){
-      paint..color=Colors.deepOrange;
+      paint.color=Colors.deepOrange;
     }
     double positionX=ballPositionX+ballDrawingMargin;
     double positionY=ballPositionY+ballDrawingMargin;
     canvas.drawCircle(Offset(positionX,positionY), ballRadius, paint);
+    canvas.drawCircle(Offset(validWidth*0.5+ballDrawingMargin, validHeight*0.5+ballDrawingMargin), ballRadius, paint);
   }
 
   @override
