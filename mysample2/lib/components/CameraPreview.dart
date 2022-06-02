@@ -50,8 +50,7 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.bottom]);
+
     _controller = CameraController(widget.camera, ResolutionPreset.high);
     _initControllerFuture = _controller.initialize();
 
@@ -132,10 +131,10 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   late double ballDrawingMargin = ballRadius * 1.2;
   late double ballPositionX = 0.0;
   late double ballPositionY = 0.0;
+  var width = 80;
+  var height = 72;
 
   checkTilt() {
-    var width = 100;
-    var height = 100;
     if (pitchValue < -90) {
       pitchValue = pitchValue.abs() - 180;
     } else if (pitchValue > 90) {
@@ -187,7 +186,8 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
   Widget build(BuildContext context) {
     final accelerometer =
         _accelerometerValues?.map((double v) => v.toStringAsFixed(1)).toList();
-
+    var ballPositionXInt = ballPositionX.round() - width / 2;
+    var ballPositionYInt = ballPositionY.round() - height / 2;
     return Stack(
         alignment: AlignmentDirectional.topStart,
         fit: StackFit.expand,
@@ -209,74 +209,75 @@ class _CameraPreviewState extends State<CameraPreviewYoutube> {
               }
             },
           ),
-          Container(color: Colors.cyan.withOpacity(0.1)),
           Center(
             child: Container(
               key: key,
-              width: MediaQuery.of(context).size.width / 3,
-              height: MediaQuery.of(context).size.height,
+              width: 100,
+              height: 500,
               decoration: BoxDecoration(
                 border: Border.all(
-                    color: Colors.yellow, width: 1.0, style: BorderStyle.solid),
+                    color: Colors.red, width: 1.0, style: BorderStyle.solid),
               ),
             ),
           ),
-          Positioned(
-            child: GestureDetector(
-              onTap: () async {
-                if (_controller.value.isTakingPicture) {
-                  return;
-                }
-                try {
-                  await _initControllerFuture;
-                  final image = await _controller.takePicture();
-                  final imageResizePath = await _resizePhoto(image.path);
-                  await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          DisplayPictureScreen(imagePath: imageResizePath)));
-                } catch (e) {
-                  print(e);
-                }
-              },
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 50),
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    border: Border.all(color: Colors.white, width: 1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+          GestureDetector(
+            onTap: () async {
+              if (_controller.value.isTakingPicture) {
+                return;
+              }
+              try {
+                await _initControllerFuture;
+                final image = await _controller.takePicture();
+                final imageResizePath = await _resizePhoto(image.path);
+                await Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        DisplayPictureScreen(imagePath: imageResizePath)));
+              } catch (e) {
+                print(e);
+              }
+            },
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 50),
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  border: Border.all(color: Colors.white, width: 1),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),
           ),
+
           Center(
-              child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 0),
-                  opacity: isPermitReading == false ? 1 : 0.0,
-                  child: const Text(
-                    'スマートフォンの角度を調整してください',
-                    style: TextStyle(color: Colors.red, fontSize: 12),
-                  ))),
-          Positioned(
-              left: 50,
-              top: 200,
-              child: Column(children: [
-                CustomPaint(
-                    painter: MyPainter(
-                        ballPositionX, ballPositionY, isPermitReading)),
-                // Text("X:$ballPositionX Y:$ballPositionY",style: const TextStyle(fontSize: 5),)
-              ])),
-          Positioned(
-              left: 50,
-              top: 350,
-              child: Text(
-                "X:$ballPositionX Y:$ballPositionY",
-                style: const TextStyle(fontSize: 5),
-              ))
+
+            child: Wrap(
+                spacing: 100,
+
+                direction: Axis.vertical,
+                children: [
+                  CustomPaint(
+                      painter: MyPainter(
+                          ballPositionX, ballPositionY, isPermitReading)),
+
+                  // Container(
+                  //   child: Text(
+                  //     "X:$ballPositionXInt Y:$ballPositionYInt",
+                  //     style:
+                  //         const TextStyle(fontSize: 12, color: Colors.green),
+                  //   ),
+                  // ),
+                  AnimatedOpacity(
+                      duration: const Duration(milliseconds: 0),
+                      opacity: isPermitReading == false ? 1 : 0.0,
+                      child: const Text(
+                        'スマートフォンの角度を調整してください',
+                        style: TextStyle(color: Colors.green, fontSize: 12),
+                      )),
+                ]),
+          ),
         ]);
   }
 
