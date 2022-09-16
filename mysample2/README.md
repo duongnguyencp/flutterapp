@@ -18,3 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 hello world, git every some else
 commit cua duong2
+hello world3, git everybody 3
