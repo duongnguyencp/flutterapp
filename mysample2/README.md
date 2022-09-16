@@ -38,3 +38,5 @@ hello world12, git for everybody 12
 hello world13, git for everybody 13
 
 commit cua duong2
+
+hello world6, git everybody 6
