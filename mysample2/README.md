@@ -34,6 +34,7 @@ hello world10, git everybody 10
 
 hello world11, git for everybody 11
 hello world12, git for everybody 12
+<<<<<<< HEAD
 
 hello world13, git for everybody 13
 
@@ -46,3 +47,5 @@ hello world8, git everybody 8
 
 hello world9, git everybody 9
 
+=======
+>>>>>>> c6c5598 (test revert deleted branch)
