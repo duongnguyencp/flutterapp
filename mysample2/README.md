@@ -17,3 +17,4 @@ samples, guidance on mobile development, and a full API reference.
 
 
 hello world, git every some else
+commit cua duong2
