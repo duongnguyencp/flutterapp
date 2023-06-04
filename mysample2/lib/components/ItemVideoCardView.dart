@@ -5,9 +5,9 @@ import 'CustomListTile.dart';
 import 'DetailModelBottomSheet.dart';
 
 class ItemVideoCardView extends StatefulWidget {
-  final VideoModel viewModel1;
+  final VideoModel viewModel;
 
-  const ItemVideoCardView({Key? key, required this.viewModel1})
+  const ItemVideoCardView({Key? key, required this.viewModel})
       : super(key: key);
 
   @override
