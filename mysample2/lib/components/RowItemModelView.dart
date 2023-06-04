@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RowItemModelView extends StatelessWidget {
+class RowItemModelView extends StatefulWidget {
   final IconData iconData;
   final String textContent;
   final double iconSize;
@@ -9,21 +9,29 @@ class RowItemModelView extends StatelessWidget {
 
   const RowItemModelView(
       {Key? key,
-        required this.iconData,
-        required this.textContent,
-        required this.iconSize,
-        required this.textSize,
-        required this.event})
+      required this.iconData,
+      required this.textContent,
+      required this.iconSize,
+      required this.textSize,
+      required this.event})
       : super(key: key);
 
+  @override
+  State<RowItemModelView> createState() => _RowItemModelViewState();
+}
+
+class _RowItemModelViewState extends State<RowItemModelView> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(iconSize: iconSize, icon: Icon(iconData), onPressed: event),
+        IconButton(
+            iconSize: widget.iconSize,
+            icon: Icon(widget.iconData),
+            onPressed: widget.event),
         Text(
-          textContent,
-          style: TextStyle(fontSize: textSize),
+          widget.textContent,
+          style: TextStyle(fontSize: widget.textSize),
         )
       ],
     );
